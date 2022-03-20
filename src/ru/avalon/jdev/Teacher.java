@@ -2,9 +2,15 @@ package ru.avalon.jdev;
 
 public class Teacher extends Human {
     private String specialty;
-    private AcademicDegree academicDegree;
+    private final AcademicDegree academicDegree;
 
-    public Teacher(String firstName, String lastName, Gender gender, String faculty, String specialty, AcademicDegree academicDegree) {
+    public Teacher(final String firstName,
+                   final String lastName,
+                   final Gender gender,
+                   final String faculty,
+                   final String specialty,
+                   final AcademicDegree academicDegree) {
+
         super(firstName, lastName, gender, faculty);
         setSpecialty(specialty);
         this.academicDegree = academicDegree;
@@ -14,7 +20,9 @@ public class Teacher extends Human {
         return specialty;
     }
 
-    public void setSpecialty(String specialty) {
+    public void setSpecialty(final String specialty) {
+        if (specialty == null)
+            throw new IllegalArgumentException("Ссылка на null");
         this.specialty = specialty;
     }
 
@@ -24,13 +32,9 @@ public class Teacher extends Human {
 
     @Override
     public void print() {
-        String info = "This is " + getFirstName() + " " + getLastName() +
-                ". " +
-                (getGender() == Gender.MALE ? Gender.MALE : Gender.FEMALE) +
-                " " + "teaches " + "at " + getFaculty() + ". " +
-                (getGender() == Gender.MALE ? Gender.MALE : Gender.FEMALE) +
-                " has " +
-                getAcademicDegree() + " degree in " + getSpecialty() + ".";
+        super.print();
+        String info = " " + (getGender() == Gender.MALE ? Gender.MALE : Gender.FEMALE) +
+                " has " + getAcademicDegree() + " degree in " + getSpecialty() + ".";
 
         System.out.println(info);
     }
@@ -48,4 +52,5 @@ public class Teacher extends Human {
             return degree;
         }
     }
+
 }
